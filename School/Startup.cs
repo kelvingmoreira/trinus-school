@@ -1,19 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using School.Models;
 using School.Repository;
 using School.Repository.Sql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace School
 {
@@ -30,7 +23,7 @@ namespace School
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IRepository<Teacher>, SqlTeacherRepository>();
-
+            services.AddSingleton<IRepository<Student>, SqlStudentRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -1,52 +1,50 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using School.Models;
 using School.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace School.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TeachersController : Controller
+    public class StudentsController : Controller
     {
-        IRepository<Teacher> _repository;
+        IRepository<Student> _repository;
 
-        public TeachersController(IRepository<Teacher> repository)
+        public StudentsController(IRepository<Student> repository)
         {
             _repository = repository;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Teacher>> Get()
+        public ActionResult<IEnumerable<Student>> Get()
         {
             return Ok(_repository.GetAsync());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Teacher> Get(int id)
+        public ActionResult<Student> Get(int id)
         {
             return Ok(_repository.GetAsync(t => t.Id == id));
         }
 
         [HttpGet("lookup")]
-        public ActionResult<IEnumerable<Teacher>> Get([FromQuery] string search)
+        public ActionResult<IEnumerable<Student>> Get([FromQuery] string search)
         {
             return Ok(_repository.GetWhereAsync(t => t.FirstName.StartsWith(search) || t.LastName.StartsWith(search)));
         }
 
         [HttpPost]
-        public ActionResult<Teacher> Post([FromBody] Teacher teacher)
+        public ActionResult<Student> Post([FromBody] Student student)
         {
-            return CreatedAtAction("post", _repository.InsertAsync(teacher));
+            return CreatedAtAction("post", _repository.InsertAsync(student));
+
         }
 
         [HttpPut]
-        public ActionResult<Teacher> Put([FromBody] Teacher teacher)
+        public ActionResult<Student> Put([FromBody] Student student)
         {
-            return Ok(_repository.UpdateAsync(teacher));
+            return Ok(_repository.UpdateAsync(student));
         }
 
         [HttpDelete("{id}")]
@@ -54,5 +52,6 @@ namespace School.Controllers
         {
             return Ok(_repository.DeleteAsync(id));
         }
+
     }
 }
